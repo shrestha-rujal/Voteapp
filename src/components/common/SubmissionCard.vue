@@ -1,5 +1,6 @@
 <template>
   <div
+    v-bind:class="{'border-blue-500': submission.votes>=20}"
     class="
       border
       border-gray-300
@@ -15,46 +16,38 @@
     <div
       class="rounded-sm w-20 h-20 overflow-hidden"
     >
-      <slot
-        name="image"
-      >
-        <box-icon
-          size="40px"
-          color="gray"
-          name='photo-album'>
-        </box-icon>
-      </slot>
+      <img
+        class="w-full h-full"
+        v-bind:src="submission.submissionImage"
+      />
     </div>
     <div class="flex-1 mx-5 flex flex-col">
       <div>
         <span class="text-blue-700 font-semibold mr-2">
-          <slot name="title">Card Heading</slot>
+          {{submission.title}}
         </span>
         <span
           class="bg-gray-300 py-1 px-2 text-xs text-gray-800 rounded-sm"
         >#
-          <slot name="rank">0</slot>
+          {{submission.id}}
         </span>
       </div>
       <div class="py-2 text-sm flex-1 text-gray-800">
-        <slot name="body">Card Body</slot>
+        {{submission.description}}
       </div>
       <div class="text-xs tracking-wide text-gray-600 flex items-center mt-2"
       >
         <span class="mr-1">Submitted By: </span>
         <div class="w-6 h-6 bg-red-300 rounded-full overflow-hidden">
-          <slot name="voter">
-            <box-icon
-              color="gray"
-              name='user-circle'>
-            </box-icon>
-          </slot>
+          <img
+            v-bind:src="submission.avatar"
+          >
         </div>
       </div>
     </div>
     <div class="h-full">
       <div
-        v-on:click="$emit('vote-clicked')"
+        v-on:click="upvote(submission.id)"
         class="
             flex
             py-1
@@ -70,7 +63,7 @@
         <div
           class="font-semibold text-blue-600 tracking-widest"
         >
-          <slot name="vote-count">0</slot>
+          {{submission.votes}}
         </div>
       </div>
     </div>
@@ -80,5 +73,14 @@
 <script>
 export default {
   name: 'SubmissionCard',
+  props: ['submission', 'submissions'],
+  methods: {
+    upvote(submissionId) {
+      const submissionToVote = this.submissions.find(
+        (submission) => submission.id === submissionId,
+      );
+      submissionToVote.votes += 1;
+    },
+  },
 };
 </script>

@@ -13,8 +13,7 @@
       items-center
   ">
     <div
-      class="rounded-sm w-20 h-20 flex items-center justify-center
-        border border-gray-300 rounded-sm"
+      class="rounded-sm w-20 h-20 overflow-hidden"
     >
       <slot
         name="image"
@@ -43,20 +42,36 @@
       <div class="text-xs tracking-wide text-gray-600 flex items-center mt-2"
       >
         <span class="mr-1">Submitted By: </span>
-        <slot name="voter">
-          <box-icon
-            color="gray"
-            name='user-circle'>
-          </box-icon>
-        </slot>
+        <div class="w-6 h-6 bg-red-300 rounded-full overflow-hidden">
+          <slot name="voter">
+            <box-icon
+              color="gray"
+              name='user-circle'>
+            </box-icon>
+          </slot>
+        </div>
       </div>
     </div>
-    <div class="h-full flex">
-      <box-icon name='chevron-up' ></box-icon>
+    <div class="h-full">
       <div
-        class="font-semibold text-blue-600 tracking-widest"
-      >
-        <slot name="vote-count">0</slot>
+        v-on:click="$emit('vote-clicked')"
+        class="
+            flex
+            py-1
+            px-2
+            rounded-sm
+            border-red-600
+            cursor-pointer
+            hover:bg-gray-200
+            hover:shadow-md
+            select-none
+      ">
+        <box-icon name='chevron-up' ></box-icon>
+        <div
+          class="font-semibold text-blue-600 tracking-widest"
+        >
+          <slot name="vote-count">0</slot>
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +79,6 @@
 
 <script>
 export default {
-  name: 'Card',
+  name: 'SubmissionCard',
 };
 </script>

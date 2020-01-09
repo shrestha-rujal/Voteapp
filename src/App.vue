@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="h-screen">
-   <vote-app />
+   <!-- <vote-app /> -->
+   <common-store />
   </div>
 </template>
 
@@ -8,12 +9,14 @@
 import './assets/css/main.css';
 import './assets/css/global.css';
 import 'boxicons';
-import VoteApp from './components/VoteApp.vue';
+// import VoteApp from './components/VoteApp.vue';
+import CommonStore from './modules/CommonStore/CommonStore.vue';
 
 export default {
   name: 'app',
   components: {
-    VoteApp,
+    // VoteApp,
+    CommonStore,
   },
 };
 </script>
